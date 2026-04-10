@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nusrath Secondary School - Result 2026</title>
+  <style>
+    /* ===== BACKGROUND (SMOOTH ANIMATION) ===== */
+    body {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4, #22c55e);
+      background-size: 300% 300%;
+      animation: gradientMove 12s ease infinite;
+      min-height: 100vh;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+      margin: 0;
+    }
+
+    @keyframes gradientMove {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ===== FLOATING SHAPES ===== */
+    .bubble-container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .bubble {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      animation: floatShape 15s linear infinite;
+      opacity: 0.6;
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    @keyframes floatShape {
+      0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+      20%  { opacity: 0.6; }
+      50%  { transform: translateY(50vh) rotate(180deg); }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes popOut {
+      0%   { transform: scale(1);   opacity: 1; }
+      50%  { transform: scale(1.5); opacity: 0.5; }
+      100% { transform: scale(0);   opacity: 0; }
+    }
+
+    .bubble:nth-child(2n) { border-radius: 50%; }
+    .bubble:nth-child(3n) { border-radius: 10px; }
+
+    /* ===== TITLE ===== */
+    .title-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      color: #fef08a;
+      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+      margin: 5px 0;
+    }
+
+    #upTitle {
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.6s ease;
+      text-shadow: 0 0 10px rgba(255,255,255,0.8);
+      font-size: 2.4rem;
+      font-weight: bold;
+    }
+
+    .rotate-once {
+      animation: rotateOnce 0.8s ease;
+    }
+
+    @keyframes rotateOnce {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ===== FORM (GLASS) ===== */
+    .form-container {
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    form {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    select, input[type="text"] {
+      padding: 12px;
+      width: 90%;
+      max-width: 350px;
+      border-radius: 12px;
+      border: none;
+      background: rgba(255,255,255,0.9);
+      color: #1e293b;
+      font-weight: 600;
+      margin: 10px 0;
+      text-align: center;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+
+    select:hover, input[type="text"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    select:focus, input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.5);
+    }
+
+    .submit-btn {
+      padding: 12px;
+      width: 90%;
+      max-width: 350px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 10px 0;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #4f46e5, #0284c7);
+    }
+
+    /* ===== ERROR MESSAGE ===== */
+    .error-msg {
+      display: none;
+      background: rgba(220,38,38,0.85);
+      color: white;
+      border-radius: 10px;
+      padding: 10px 18px;
+      margin: 10px 0 0;
+      font-weight: 700;
+      font-size: 0.97rem;
+      width: 90%;
+      max-width: 350px;
+      text-align: center;
+    }
+
+    /* Loading spinner */
+    .loading-msg {
+      display: none;
+      color: #fef08a;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 10px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubble-container" id="bubbleContainer"></div>
+
+  <div class="title-container">
+    <h3>Nusrath Secondary School Randathani</h3>
+    <h3>Annual Evaluation Result 2026</h3>
+    <h2 id="upTitle">UP</h2>
+  </div>
+
+  <div class="form-container">
+    <form id="resultForm" onsubmit="fetchResult(event)">
+      <select name="cl" id="clSelect" required>
+        <option value="">Select Class:</option>
+        <option value="VIIA">VIIA ✏️</option>
+        <option value="VIIB">VIIB 📝</option>
+        <option value="VIA">VIA 📖</option>
+        <option value="VIB">VIB 🧪</option>
+	<option value="VA">VA 🧪</option>
+      </select>
+      <input type="text" name="rl" id="rlInput" placeholder="Enter your Admission Number" required />
+      <input type="text" name="dob" id="dobInput" placeholder="DD/MM/YYYY" required />
+      <button type="submit" class="submit-btn">Get Result</button>
+      <div class="error-msg" id="errorMsg">❌ Admission Number and Date of Birth do not match. Please check and try again.</div>
+    </form>
+  </div>
+
+  <div class="loading-msg" id="loadingMsg">⏳ Fetching result, please wait...</div>
+
+  <script>
+    // ============================================================
+    // ⚠️  CONFIGURATION — UPDATE THESE TWO VALUES
+    // ============================================================
+    const SPREADSHEET_ID = '1Pt8rTM4AuXTMgzBKjqjuEPxNsQI5_77p2giyHkZ1YG0';
+    const API_KEY        = 'AIzaSyBEMTFGC4g7f7k-8CpGEqK5ca_SgzCJlTI';   // <-- Replace with your API key
+    // ============================================================
+
+    async function fetchResult(e) {
+      e.preventDefault();
+      const cls  = document.getElementById('clSelect').value;
+      const roll = document.getElementById('rlInput').value.trim();
+      const dob  = document.getElementById('dobInput').value.trim();
+      const errEl  = document.getElementById('errorMsg');
+      const loadEl = document.getElementById('loadingMsg');
+
+      errEl.style.display  = 'none';
+      loadEl.style.display = 'block';
+
+      try {
+        // Fetch the entire sheet as values
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(cls)}?key=${API_KEY}`;
+        const res  = await fetch(url);
+        if (!res.ok) throw new Error('Sheet not found or API error');
+        const json = await res.json();
+        const rows = json.values || [];
+
+        let found = null;
+        for (const row of rows) {
+          const rowRoll = (row[0]  || '').toString().trim();
+          const rowDob  = (row[38] || '').toString().trim();
+          if (rowRoll === roll && rowDob === dob) {
+            found = row;
+            break;
+          }
+        }
+
+        loadEl.style.display = 'none';
+
+        if (!found) {
+          errEl.style.display = 'block';
+          return;
+        }
+
+        // Store result in sessionStorage and navigate to result page
+        sessionStorage.setItem('resultData', JSON.stringify({ cls, roll, data: found }));
+        window.location.href = 'up_result.html';
+
+      } catch (err) {
+        loadEl.style.display = 'none';
+        errEl.textContent = '⚠️ Error: ' + err.message;
+        errEl.style.display = 'block';
+      }
+    }
+
+    // ===== Floating Bubbles =====
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      const size     = Math.random() * 30 + 20;
+      const left     = Math.random() * 100;
+      const duration = Math.random() * 6 + 6;
+      const colors   = [
+        'rgba(255,255,255,0.6)',
+        'rgba(255,255,0,0.6)',
+        'rgba(0,255,255,0.6)',
+        'rgba(255,100,100,0.6)'
+      ];
+      bubble.style.width            = size + 'px';
+      bubble.style.height           = size + 'px';
+      bubble.style.left             = left + 'vw';
+      bubble.style.animationDuration = duration + 's';
+      bubble.style.background       = colors[Math.floor(Math.random() * colors.length)];
+
+      bubble.addEventListener('click', function () {
+        this.style.animation = 'popOut 0.4s forwards';
+        setTimeout(() => { this.remove(); createBubble(); }, 400);
+      });
+
+      document.getElementById('bubbleContainer').appendChild(bubble);
+    }
+
+    for (let i = 0; i < 4; i++) createBubble();
+
+    // ===== up Rotate =====
+    const up = document.getElementById('upTitle');
+    window.addEventListener('load', () => {
+      up.classList.add('rotate-once');
+      setTimeout(() => up.classList.remove('rotate-once'), 800);
+    });
+    up.addEventListener('click', () => {
+      up.classList.remove('rotate-once');
+      void up.offsetWidth;
+      up.classList.add('rotate-once');
+    });
+  </script>
+
+</body>
+</html>

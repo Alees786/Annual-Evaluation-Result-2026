@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Result - Nusrath KG Section</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap');
+
+    body {
+      text-align: center;
+      font-family: 'Nunito', cursive, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #fce4ec, #fff9c4);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .page-wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 24px;
+      padding: 30px 36px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+      border: 4px solid #ffb300;
+    }
+
+    .school-header {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      border-radius: 16px;
+      padding: 18px 10px 14px;
+      margin-bottom: 20px;
+    }
+
+    .school-header h1 {
+      color: white;
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 0 6px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+      letter-spacing: 0.5px;
+    }
+
+    .school-header h2 {
+      color: #ffe066;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    .star-row {
+      font-size: 22px;
+      margin: 8px 0 0;
+      letter-spacing: 4px;
+    }
+
+    .info-box {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .info-card {
+      background: #f3eeff;
+      border: 2px solid #c4b5fd;
+      border-radius: 12px;
+      padding: 10px 20px;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .info-card .label {
+      font-size: 12px;
+      color: #7c3aed;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-card .value {
+      font-size: 18px;
+      font-weight: 800;
+      color: #4a1a8c;
+      margin-top: 2px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    thead tr { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+
+    thead th {
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr:nth-child(odd)  { background: #f9f5ff; }
+    tbody tr:nth-child(even) { background: #fdf4ff; }
+    tbody tr:hover           { background: #ede9fe; }
+
+    td {
+      padding: 11px 14px;
+      font-size: 16px;
+      border-bottom: 1px solid #e9d5ff;
+      color: #333;
+    }
+
+    td:first-child {
+      text-align: left;
+      font-weight: 700;
+      color: #4a1a8c;
+    }
+
+    .grade {
+      font-size: 17px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    .total-row td {
+      background: #fef9c3 !important;
+      font-size: 17px;
+      font-weight: 800;
+      color: #92400e;
+      border-top: 2px solid #fbbf24;
+    }
+
+    .percent-row td {
+      background: #d1fae5 !important;
+      font-size: 18px;
+      font-weight: 800;
+      color: #065f46;
+      border-top: 2px solid #6ee7b7;
+    }
+
+    .footer-note {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 16px;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 13px 32px;
+      border: none;
+      font-size: 16px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+
+    .btn-print { background: linear-gradient(90deg, #7c3aed, #a855f7); color: white; }
+    .btn-pdf   { background: linear-gradient(90deg, #dc2626, #f87171); color: white; }
+    .btn-home  { background: linear-gradient(90deg, #059669, #34d399); color: white; }
+
+    .btn:hover  { transform: scale(1.07); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .btn:active { transform: scale(0.97); }
+
+    #pdf-spinner {
+      display: none;
+      font-size: 14px;
+      color: #7c3aed;
+      margin-top: 10px;
+      font-weight: 700;
+    }
+
+    .not-found-msg {
+      font-size: 1.2rem;
+      color: #dc2626;
+      font-weight: 700;
+      padding: 40px;
+    }
+
+    @media print {
+      body { background: white !important; padding: 0; }
+      .page-wrapper {
+        box-shadow: none !important;
+        border: 3px solid #ffb300 !important;
+        padding: 20px 24px !important;
+      }
+      .school-header { background: #7c3aed !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      thead tr { background: #7c3aed !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      tbody tr:nth-child(odd)  { background: #f9f5ff !important; print-color-adjust: exact; }
+      tbody tr:nth-child(even) { background: #fdf4ff !important; print-color-adjust: exact; }
+      .total-row td   { background: #fef9c3 !important; print-color-adjust: exact; }
+      .percent-row td { background: #d1fae5 !important; print-color-adjust: exact; }
+      .btn-row, #pdf-spinner { display: none !important; }
+      @page { margin: 0.5cm; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrapper" id="result-content">
+    <div class="school-header">
+      <h1>🏫 NUSRATH SECONDARY SCHOOL RANDATHANI</h1>
+      <h2>⭐ ANNUAL EVALUATION RESULT 2026 ⭐</h2>
+      <div class="star-row">🌈 🎉 🏆 🎊 🌟</div>
+    </div>
+
+    <div class="info-box" id="infoBox"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>📖 Subject</th>
+          <th>🎯 Mark</th>
+          <th>🏅 Grade</th>
+        </tr>
+      </thead>
+      <tbody id="marksBody"></tbody>
+    </table>
+
+    <div class="footer-note">🌟 Keep working hard and shining bright! 🌟</div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-pdf"   onclick="downloadPDF()">⬇️ Download PDF</button>
+    <button class="btn btn-print" onclick="window.print()">🖨️ Print</button>
+    <button class="btn btn-home"  onclick="goHome()">🔍 Check Another Result</button>
+  </div>
+  <div id="pdf-spinner">⏳ Generating PDF, please wait...</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    function goHome() {
+      window.location.href = 'index_KG.html';
+    }
+
+    function v(arr, idx) {
+      return (arr[idx] !== undefined && arr[idx] !== null) ? arr[idx] : '';
+    }
+
+    function populatePage() {
+      const raw = sessionStorage.getItem('kgResultData');
+      if (!raw) {
+        document.getElementById('result-content').innerHTML =
+          '<div class="not-found-msg">⚠️ No result data found. Please go back and search again.</div>';
+        return;
+      }
+
+      const { cls, roll, data: d } = JSON.parse(raw);
+
+      // Info cards
+      document.getElementById('infoBox').innerHTML = `
+        <div class="info-card">
+          <div class="label">📚 Class</div>
+          <div class="value">${cls}</div>
+        </div>
+        <div class="info-card">
+          <div class="label">🔢 Admission No</div>
+          <div class="value">${roll}</div>
+        </div>
+        <div class="info-card">
+          <div class="label">👦 Student Name</div>
+          <div class="value">${v(d, 1)}</div>
+        </div>
+      `;
+
+      // Subject rows: [label, mark_idx, grade_idx]
+      const subjects = [
+        ['Malayalam',            5,  6],
+        ['English',              7,  8],
+        ['Environmental Studies',9, 10],
+        ['Mathematics',         11, 12],
+        ['Moral Studies',       13, 14],
+      ];
+
+      let rows = subjects.map(([lbl, mIdx, gIdx]) => `
+        <tr>
+          <td>${lbl}</td>
+          <td>${v(d, mIdx)}</td>
+          <td><span class="grade">${v(d, gIdx)}</span></td>
+        </tr>
+      `).join('');
+
+      rows += `
+        <tr class="total-row">
+          <td>🏆 Total Marks</td>
+          <td>${v(d, 3)}</td>
+          <td>${v(d, 4)}</td>
+        </tr>
+        <tr class="percent-row">
+          <td colspan="2">📊 Percentage of Marks</td>
+          <td><b>${v(d, 15)}%</b></td>
+        </tr>
+      `;
+
+      document.getElementById('marksBody').innerHTML = rows;
+
+      window._roll = roll;
+      window._cls  = cls;
+    }
+
+    async function downloadPDF() {
+      const spinner = document.getElementById('pdf-spinner');
+      spinner.style.display = 'block';
+      try {
+        const { jsPDF } = window.jspdf;
+        const element  = document.getElementById('result-content');
+        const canvas   = await html2canvas(element, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+        const imgData  = canvas.toDataURL('image/png');
+        const pdf      = new jsPDF('p', 'mm', 'a4');
+        const pw = pdf.internal.pageSize.getWidth();
+        const ph = pdf.internal.pageSize.getHeight();
+        const iw = pw - 20;
+        const ih = (canvas.height * iw) / canvas.width;
+        const y  = ih < ph ? (ph - ih) / 2 : 10;
+        pdf.addImage(imgData, 'PNG', 10, y, iw, ih);
+        pdf.save(`Result_${window._roll}_${window._cls}.pdf`);
+      } catch (err) {
+        alert('PDF generation failed. Please use the Print button instead.');
+      }
+      spinner.style.display = 'none';
+    }
+
+    populatePage();
+  </script>
+
+</body>
+</html>
