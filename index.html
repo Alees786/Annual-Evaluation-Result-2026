@@ -268,7 +268,7 @@
     <div class="school-badge">🏫</div>
     <h1>Nusrath Secondary School<br>Randathani</h1>
     <h2>Annual Evaluation Result 2026</h2>
-    <h3>Results available on April 22 at 11:00 AM</h3>
+    <h3>Results available on April 22 at 3:00 PM</h3>
     <div class="divider"></div>
     <div class="admin-badge" id="adminBadge"><div class="admin-dot"></div>Admin Mode — All Results Unlocked</div>
     <div id="countdown-timer">Loading...</div>
@@ -302,7 +302,7 @@
   }
 
   // ─── Countdown ────────────────────────────────────────────────────────────────
-  const startDate = new Date(2026, 3, 22, 11, 0, 0); // April 22, 2026 11:00 AM
+  const startDate = new Date(2026, 3, 22, 15, 0, 0); // April 22, 2026 3:00 PM
   let adminUnlocked = false;
 
   function formatTime(ms) {
@@ -369,7 +369,7 @@
     const val = document.getElementById('pwInput').value;
     const errEl = document.getElementById('pwError');
     const inp = document.getElementById('pwInput');
-    if (val === 'Ali@8') {
+    if (val === 'Alees@8') {
       inp.classList.remove('error'); inp.classList.add('success');
       errEl.textContent = '';
       setTimeout(() => { closeAdminModal(); activateAdmin(); }, 500);
